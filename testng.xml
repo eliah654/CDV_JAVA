@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="CDV_JAVA" verbose="1">
+    <test name="CDV_JAVA_TEST1" preserve-order="true" enabled="true">
+        <classes>
+            <class name="SearchTrainTest">
+
+            </class>
+        </classes>
+    </test>
+</suite>
