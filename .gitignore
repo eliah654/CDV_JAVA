@@ -1,0 +1,5 @@
+*.7z
+geckodriver.log
+tempik.txt
+.idea
+target
