@@ -12,7 +12,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 public class SearchFormClicks {
 
     WebDriver driver;
-    WebDriverWait wait;
+    WebDriverWait wait ;
 
     @FindBy(xpath = "//button[contains(text(),'Akceptuj wszystkie pliki cookie')]")
     WebElement cookieAgree;
@@ -41,9 +41,12 @@ public class SearchFormClicks {
     @FindBy(xpath = "//div[@class='main-search__options-close']//button[@type='button']//span[@class='txlc'][contains(text(),'Zamknij opcje wyszukiwania')]")
     WebElement closeSearchOptions;
 
+
+
     public SearchFormClicks(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+
     }
 
     public void ClearField(WebElement pageElement){
@@ -51,24 +54,26 @@ public class SearchFormClicks {
         pageElement.sendKeys(Keys.BACK_SPACE);
     }
 
-    public void setCookieAgree(){
+    public void setCookieAgree(int counterT) {
 
-        wait = new WebDriverWait(driver, 10);
-        wait.until(elementToBeClickable(cookieAgree));
-        cookieAgree.click();
+        if(counterT == 0) {
+            wait = new WebDriverWait(driver, 1);
+            wait.until(elementToBeClickable(cookieAgree));
+            cookieAgree.click();
+        }
     }
 
 
     public void searchButton(){
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(searchButton));
         searchButton.click();
     }
 
     public void wyjazdInput(String insertTown){
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(wyjazdInput));
         wyjazdInput.click();
         wyjazdInput.sendKeys(insertTown);
@@ -76,7 +81,7 @@ public class SearchFormClicks {
 
     public void przyjazdInput(String insertTown){
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(przyjazdInput));
         przyjazdInput.click();
         przyjazdInput.sendKeys(insertTown);
@@ -85,7 +90,7 @@ public class SearchFormClicks {
 
     public void dataInput(String insertData){
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(dataInput));
         dataInput.click();
         this.ClearField(dataInput);
@@ -94,7 +99,7 @@ public class SearchFormClicks {
 
     public void godzinaInput(String insertGodzina){
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(godzinaInput));
         godzinaInput.click();
         this.ClearField(godzinaInput);
@@ -103,21 +108,21 @@ public class SearchFormClicks {
 
     public void directConnections(){
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(directConnections));
         directConnections.click();
     }
 
     public void moreSearchOptions(){
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(moreSearchOptions));
         moreSearchOptions.click();
     }
 
     public void closeSearchOptions(){
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(closeSearchOptions));
         closeSearchOptions.click();
     }
