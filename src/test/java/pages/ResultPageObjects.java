@@ -61,31 +61,68 @@ public class ResultPageObjects {
         return mainTitle.getText();
     }
 
-    public String checkTrainNumber(String trainName, String nameType){
-        String trainNameCheck;
+    public String checkTrainName(String trainName, String nameType){
+        String trainNameCheck = "UPPSS";
         WebElement trainNameOnPage;
 
-        if (nameType == "1"){
-            trainNameOnPage = driver.findElement(By.xpath("//span[contains(text(),'" + trainName + "')]"));
-            trainNameCheck = trainNameOnPage.getText();
-            return trainNameCheck;
-        }
-        else if (nameType == "0") {
-            trainNameOnPage = driver.findElement(By.xpath("//p[contains(text(),'" + trainName + "')]"));
-            trainNameCheck = trainNameOnPage.getText();
-            return trainNameCheck;
-        }
-        else if  (nameType == "2") {
-            trainNameOnPage = driver.findElement(By.xpath("//div[@class ='search-results__item row abt-focusable search-results__item--expanded']//div[@ class ='col-9 col-12--phone relative']//div[@ class ='row row-station box--flex block-phone']//div[@ class ='col-3 col-12--phone inline-center box--flex--column']//p[@ class ='item-label'][contains(text(), 'osobowy')]"));
-            trainNameCheck = trainNameOnPage.getText();
-            return trainNameCheck;
-        }
-        else if  (nameType == "3") {
-            trainNameOnPage = driver.findElement(By.xpath("/html[1]/body[1]/div[6]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[3]/p[4]/span[2]"));
-            trainNameCheck = trainNameOnPage.getText();
+        switch (nameType){
+            case "0":
+                trainNameOnPage = driver.findElement(By.xpath("//p[contains(text(),'" + trainName + "')]"));
+                return trainNameOnPage.getText();
+            case "1":
+                trainNameOnPage = driver.findElement(By.xpath("//span[contains(text(),'" + trainName + "')]"));
+                return trainNameOnPage.getText();
 
+            case "2":
+                trainNameOnPage = driver.findElement(By.xpath("//div[@class ='search-results__item row abt-focusable search-results__item--expanded']//div[@ class ='col-9 col-12--phone relative']//div[@ class ='row row-station box--flex block-phone']//div[@ class ='col-3 col-12--phone inline-center box--flex--column']//p[@ class ='item-label'][contains(text(), 'osobowy')]"));
+                                                               //body[@data-fixed='188']/div[@id='accessible-body']/div[@class='main box']/div[@class='search-results box']/div[@class='search-results__container']/div[5]/div[1]/div[1]/div[3]/p[3]
+                return trainNameOnPage.getText();
+
+            case "3":
+                trainNameOnPage = driver.findElement(By.xpath("/html[1]/body[1]/div[6]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[3]/p[3]"));
+                return trainNameOnPage.getText();
+                //"/html[1]/body[1]/div[6]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[3]/p[4]/span[2]"
         }
 
         return trainNameCheck;
     }
+
+    public String checkTrainNumber(String trainNumber){
+        WebElement trainNumberOnPage;
+        //String numberOnPage = null;
+        wait = new WebDriverWait(driver, 1);
+        trainNumberOnPage = driver.findElement(By.xpath("//p[contains(text(),'"+trainNumber+"')]"));
+        wait.until(visibilityOf(trainNumberOnPage));
+        return trainNumberOnPage.getText();
+    }
+
+    publick String[][] check_przesiadki(String pociag,String numer,String ifnazwa,String prze1A,String prze1B,String prze1C,String prze2A,String prze2B,String prze2C,
+                                        String prze3A,String prze3B,String prze3C,String prze4A,String prze4B,
+                                        String prze4C){
+
+    sprawdzenie = []
+
+            assert self.verification(ifnazwa, pociag, numer) == "OK"
+            sprawdzenie.append("OK")
+
+            if prze1A != "0":
+            assert self.verification(prze1C, prze1A, prze1B) == "OK"
+            sprawdzenie.append("OK")
+
+    elif prze2A != "0":
+            assert self.verification(prze2C, prze2A, prze2B) == "OK"
+            sprawdzenie.append("OK")
+
+    elif prze3A != "0":
+            assert self.verification(prze3C, prze3A, prze3B) == "OK"
+            sprawdzenie.append("OK")
+
+    elif prze4A != "0":
+            assert self.verification(prze4C, prze4A, prze4B) == "OK"
+            sprawdzenie.append("OK")
+
+            else:
+            sprawdzenie.append("NOT")
+
+            return sprawdzenie
 }

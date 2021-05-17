@@ -34,22 +34,19 @@ public class SearchTrainTest {
 
 
     @Test(dataProvider="testData1", dataProviderClass=CSVReader.class)
-    public void testSearchTrain(String godzinka, String dzien, String odjazd, String przyjazd, String trainName, String trainNumber, String nameType) {
-        System.out.println(counterT);
-        System.out.println(godzinka);
-        System.out.println(dzien);
-        System.out.println(odjazd);
-        System.out.println(przyjazd);
-        System.out.println("------------");
+    public void testSearchTrain1(String godzinka, String dzien, String odjazd, String przyjazd, String trainName, String trainNumber, String nameType) {
+
         if(godzinka != null){
             driver.get("https://portalpasazera.pl");
-            //String pageTitle = driver.getTitle();
-            //Assert.assertEquals(pageTitle,"Wyszukiwarka rozkładu jazdy pociągów PKP PLK S.A. - Portal Pasażera - PKP Polskie Linie Kolejowe S.A.");
 
             this.slowDown(500);
             SearchFormClicks cookieDismiss = new SearchFormClicks(driver);
             cookieDismiss.setCookieAgree(counterT);
             counterT++;
+
+            this.slowDown(500);
+            SearchFormClicks clickDirect = new SearchFormClicks(driver);
+            clickDirect.directConnections();
 
             this.slowDown(500);
             SearchFormClicks insertOdjazd = new SearchFormClicks(driver);
@@ -68,26 +65,41 @@ public class SearchTrainTest {
             insertGodzina.godzinaInput(godzinka);
 
             this.slowDown(500);
-            SearchFormClicks clickDirect = new SearchFormClicks(driver);
-            clickDirect.directConnections();
-
-            this.slowDown(500);
             SearchFormClicks clickSzukaj = new SearchFormClicks(driver);
             clickSzukaj.searchButton();
 
             this.slowDown(3000);
-            ResultPageObjects mainTitle = new ResultPageObjects(driver);
-            String titleReturn = mainTitle.checkMainTitle();
+            ResultPageObjects checkResultMainTitle = new ResultPageObjects(driver);
+            ResultPageObjects checkResultTrainNumber = new ResultPageObjects(driver);
+            ResultPageObjects checkResultTrainName = new ResultPageObjects(driver);
+            ResultPageObjects test = new ResultPageObjects(driver);
+
+            String titleReturn = test.checkMainTitle();
             Assert.assertEquals(titleReturn, "Wyniki wyszukiwania");
 
+            String trainNameReturn = test.checkTrainName(trainName, nameType);
+            Assert.assertTrue(trainNameReturn.contains(trainName));
 
-
+            String trainNumberReturn = test.checkTrainNumber(trainNumber);
+            Assert.assertTrue(trainNumberReturn.contains(trainNumber));
         }
 
 
     }
 
+    @Test(dataProvider="testData2", dataProviderClass=CSVReader.class)
+    public void testSearchTrain2(String godzinka, String dzien, String odjazd, String przyjazd, String trainName, String trainNumber, String nameType, String changes,
+                                 String cheng1A, String cheng1B, String cheng1C, String cheng2A, String cheng2B, String cheng2C,
+                                 String cheng3A, String cheng3B, String cheng3C, String cheng4A, String cheng4B, String cheng4C){
 
+            driver.get("https://portalpasazera.pl");
+
+            this.slowDown(500);
+            SearchFormClicks cookieDismiss = new SearchFormClicks(driver);
+            cookieDismiss.setCookieAgree(counterT);
+            counterT++;
+
+    }
 
     @AfterClass
     public void tearDown()  {

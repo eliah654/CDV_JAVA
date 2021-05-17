@@ -35,6 +35,9 @@ public class SearchFormClicks {
     @FindBy(xpath = "//span[@class='label-inside txlc']")
     WebElement directConnections;
 
+    @FindBy(xpath = "//input[@id='dirChck']")
+    WebElement dC2;
+
     @FindBy(xpath = "//button[contains(text(),'Więcej opcji wyszukiwania')]")
     WebElement moreSearchOptions;
 
@@ -110,7 +113,9 @@ public class SearchFormClicks {
 
         wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(directConnections));
-        directConnections.click();
+        if(!dC2.isSelected()) {
+            directConnections.click();
+        }
     }
 
     public void moreSearchOptions(){

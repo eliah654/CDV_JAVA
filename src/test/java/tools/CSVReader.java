@@ -43,4 +43,18 @@ public class CSVReader {
         return testDataS;
     }
 
+    @DataProvider(name="testData2")
+    public static Object[][] testDataCSV2() throws IOException {
+        String[][] testDataFromF;
+        CSVReader file = new CSVReader();
+        testDataFromF = file.CSVReaderFromFile("src/test/java/data/DDT_data2.csv");
+        int rows = testDataFromF.length;
+        System.out.println(rows);
+        Object[][]testDataS = new Object[rows][7];
+        for(int i=0;i<rows-1; i++) {
+            System.arraycopy(testDataFromF[i], 0, testDataS[i], 0, 7);
+
+        }
+        return testDataS;
+    }
 }
