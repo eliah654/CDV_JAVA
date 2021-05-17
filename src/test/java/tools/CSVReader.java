@@ -35,11 +35,9 @@ public class CSVReader {
         testDataFromF = file.CSVReaderFromFile("src/test/java/data/DDT_data.csv");
         int rows = testDataFromF.length;
         System.out.println(rows);
-        Object[][]testDataS = new Object[rows][4];
-        for(int i=1;i<rows-1; i++) {
-            for(int j=0; j<4; j++){
-                testDataS[i][j] = testDataFromF[i][j];
-            }
+        Object[][]testDataS = new Object[rows][7];
+        for(int i=0;i<rows-1; i++) {
+            System.arraycopy(testDataFromF[i], 0, testDataS[i], 0, 7);
 
         }
         return testDataS;

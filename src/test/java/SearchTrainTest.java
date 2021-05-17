@@ -24,17 +24,17 @@ public class SearchTrainTest {
 
     @BeforeClass
     public void setUp(){
-        //System.setProperty("webdriver.firefox.driver", "/geckodriver/geckodriver");
-        System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver");
-        //driver = new FirefoxDriver();
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.firefox.driver", "/geckodriver/geckodriver");
+        //System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver");
+        driver = new FirefoxDriver();
+        //driver = new ChromeDriver();
         driver.manage().window().maximize();
 
     }
 
 
     @Test(dataProvider="testData1", dataProviderClass=CSVReader.class)
-    public void testSearchTrain(String godzinka, String dzien, String odjazd, String przyjazd) {
+    public void testSearchTrain(String godzinka, String dzien, String odjazd, String przyjazd, String trainName, String trainNumber, String nameType) {
         System.out.println(counterT);
         System.out.println(godzinka);
         System.out.println(dzien);
@@ -46,41 +46,43 @@ public class SearchTrainTest {
             //String pageTitle = driver.getTitle();
             //Assert.assertEquals(pageTitle,"Wyszukiwarka rozkładu jazdy pociągów PKP PLK S.A. - Portal Pasażera - PKP Polskie Linie Kolejowe S.A.");
 
+            this.slowDown(500);
+            SearchFormClicks cookieDismiss = new SearchFormClicks(driver);
+            cookieDismiss.setCookieAgree(counterT);
+            counterT++;
+
+            this.slowDown(500);
+            SearchFormClicks insertOdjazd = new SearchFormClicks(driver);
+            insertOdjazd.wyjazdInput(odjazd);
+
+            this.slowDown(500);
+            SearchFormClicks insertPrzyjazd = new SearchFormClicks(driver);
+            insertPrzyjazd.przyjazdInput(przyjazd);
+
+            this.slowDown(500);
+            SearchFormClicks insertData = new SearchFormClicks(driver);
+            insertData.dataInput(dzien);
+
+            this.slowDown(500);
+            SearchFormClicks insertGodzina = new SearchFormClicks(driver);
+            insertGodzina.godzinaInput(godzinka);
+
+            this.slowDown(500);
+            SearchFormClicks clickDirect = new SearchFormClicks(driver);
+            clickDirect.directConnections();
+
+            this.slowDown(500);
+            SearchFormClicks clickSzukaj = new SearchFormClicks(driver);
+            clickSzukaj.searchButton();
+
+            this.slowDown(3000);
+            ResultPageObjects mainTitle = new ResultPageObjects(driver);
+            String titleReturn = mainTitle.checkMainTitle();
+            Assert.assertEquals(titleReturn, "Wyniki wyszukiwania");
 
 
 
-                this.slowDown(500);
-                SearchFormClicks cookieDismiss = new SearchFormClicks(driver);
-                cookieDismiss.setCookieAgree(counterT);
-                counterT++;
-
-                this.slowDown(500);
-                SearchFormClicks insertOdjazd = new SearchFormClicks(driver);
-                insertOdjazd.wyjazdInput(odjazd);
-
-                this.slowDown(500);
-                SearchFormClicks insertPrzyjazd = new SearchFormClicks(driver);
-                insertPrzyjazd.przyjazdInput(przyjazd);
-
-                this.slowDown(500);
-                SearchFormClicks insertData = new SearchFormClicks(driver);
-                insertData.dataInput(dzien);
-
-                this.slowDown(500);
-                SearchFormClicks insertGodzina = new SearchFormClicks(driver);
-                insertGodzina.godzinaInput(godzinka);
-
-                this.slowDown(500);
-                SearchFormClicks clickSzukaj = new SearchFormClicks(driver);
-                clickSzukaj.searchButton();
-
-                this.slowDown(3000);
-                ResultPageObjects mainTitle = new ResultPageObjects(driver);
-                String titleReturn = mainTitle.checkMainTitle();
-                Assert.assertEquals(titleReturn, "Wyniki wyszukiwania");
-
-
-            }
+        }
 
 
     }
