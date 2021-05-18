@@ -12,7 +12,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 public class ResultPageObjects {
 
     WebDriver driver;
-    WebDriverWait wait ;
+    WebDriverWait wait;
 
     @FindBy(xpath = "//h2[@class='inline-center']")
     WebElement mainTitle;
@@ -44,8 +44,8 @@ public class ResultPageObjects {
     @FindBy(xpath = "//h3[@class='inline-center abt-focusable']")
     WebElement noConnection;
 
-
-
+    @FindBy(xpath = "// body[@ data-fixed='188'] / div[@ id='accessible-body'] / div[ @class ='main box'] / div[@ class ='search-results box'] / div[@ class ='search-results__container'] / div[1] / div[1] / button[1]")
+    WebElement changeLevel1;
 
 
     public ResultPageObjects(WebDriver driver) {
@@ -54,18 +54,18 @@ public class ResultPageObjects {
 
     }
 
-    public String checkMainTitle(){
+    public String checkMainTitle() {
 
         wait = new WebDriverWait(driver, 1);
         wait.until(visibilityOf(mainTitle));
         return mainTitle.getText();
     }
 
-    public String checkTrainName(String trainName, String nameType){
+    public String checkTrainName(String trainName, String nameType) {
         String trainNameCheck = "UPPSS";
         WebElement trainNameOnPage;
 
-        switch (nameType){
+        switch (nameType) {
             case "0":
                 trainNameOnPage = driver.findElement(By.xpath("//p[contains(text(),'" + trainName + "')]"));
                 return trainNameOnPage.getText();
@@ -75,54 +75,83 @@ public class ResultPageObjects {
 
             case "2":
                 trainNameOnPage = driver.findElement(By.xpath("//div[@class ='search-results__item row abt-focusable search-results__item--expanded']//div[@ class ='col-9 col-12--phone relative']//div[@ class ='row row-station box--flex block-phone']//div[@ class ='col-3 col-12--phone inline-center box--flex--column']//p[@ class ='item-label'][contains(text(), 'osobowy')]"));
-                                                               //body[@data-fixed='188']/div[@id='accessible-body']/div[@class='main box']/div[@class='search-results box']/div[@class='search-results__container']/div[5]/div[1]/div[1]/div[3]/p[3]
                 return trainNameOnPage.getText();
 
             case "3":
                 trainNameOnPage = driver.findElement(By.xpath("/html[1]/body[1]/div[6]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[3]/p[3]"));
                 return trainNameOnPage.getText();
-                //"/html[1]/body[1]/div[6]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[3]/p[4]/span[2]"
+
         }
 
         return trainNameCheck;
     }
 
-    public String checkTrainNumber(String trainNumber){
+    public String checkTrainNumber(String trainNumber) {
         WebElement trainNumberOnPage;
         //String numberOnPage = null;
         wait = new WebDriverWait(driver, 1);
-        trainNumberOnPage = driver.findElement(By.xpath("//p[contains(text(),'"+trainNumber+"')]"));
+        trainNumberOnPage = driver.findElement(By.xpath("//p[contains(text(),'" + trainNumber + "')]"));
         wait.until(visibilityOf(trainNumberOnPage));
         return trainNumberOnPage.getText();
     }
 
-    publick String[][] check_przesiadki(String pociag,String numer,String ifnazwa,String prze1A,String prze1B,String prze1C,String prze2A,String prze2B,String prze2C,
-                                        String prze3A,String prze3B,String prze3C,String prze4A,String prze4B,
-                                        String prze4C){
 
-    sprawdzenie = []
+    public void openChanges(int level) {
+        wait = new WebDriverWait(driver, 1);
+        WebElement openTransition;
 
-            assert self.verification(ifnazwa, pociag, numer) == "OK"
-            sprawdzenie.append("OK")
+        switch (level) {
+            case 1:
+                wait.until(elementToBeClickable(transition1));
+                transition1.click();
+            case 2:
+                wait.until(elementToBeClickable(transition2));
+                transition1.click();
+            case 3:
+                wait.until(elementToBeClickable(transition3));
+                transition1.click();
+            case 4:
+                wait.until(elementToBeClickable(transition4));
+                transition1.click();
+            case 5:
+                wait.until(elementToBeClickable(transition5));
+                transition1.click();
 
-            if prze1A != "0":
-            assert self.verification(prze1C, prze1A, prze1B) == "OK"
-            sprawdzenie.append("OK")
+        }
+    }
 
-    elif prze2A != "0":
-            assert self.verification(prze2C, prze2A, prze2B) == "OK"
-            sprawdzenie.append("OK")
+    public String[] resultCheckB(String trainName, String trainNumber, String ifnazwa) {
 
-    elif prze3A != "0":
-            assert self.verification(prze3C, prze3A, prze3B) == "OK"
-            sprawdzenie.append("OK")
+        String[] returnValues = new String[2];
 
-    elif prze4A != "0":
-            assert self.verification(prze4C, prze4A, prze4B) == "OK"
-            sprawdzenie.append("OK")
+        returnValues[0] = this.checkTrainNumber(trainNumber);
+        returnValues[1] = this.checkTrainName(trainName, ifnazwa);
 
-            else:
-            sprawdzenie.append("NOT")
+        return returnValues;
+    }
 
-            return sprawdzenie
+
+    public String[][] checkTransition(String pociag, String numer, String ifnazwa, String prze1A, String prze1B,
+                                      String prze1C, String prze2A, String prze2B, String prze2C, String prze3A, String prze3B, String prze3C,
+                                      String prze4A, String prze4B, String prze4C) {
+
+        String[][] checkedTransitions = new String[5][2];
+
+
+        checkedTransitions[0] = this.resultCheckB(pociag, numer, ifnazwa);
+
+
+        if (!prze1A.equals("0")) {
+            checkedTransitions[1] = resultCheckB(prze1C, prze1A, prze1B);
+        } else if (!prze2A.equals("0")) {
+            checkedTransitions[2] = resultCheckB(prze2C, prze2A, prze2B);
+        } else if (!prze3A.equals("0")) {
+            checkedTransitions[3] = resultCheckB(prze3C, prze3A, prze3B);
+        } else if (!prze4A.equals("0")) {
+            checkedTransitions[4] = resultCheckB(prze4C, prze4A, prze4B);
+        }
+
+
+        return checkedTransitions;
+    }
 }

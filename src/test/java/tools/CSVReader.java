@@ -55,6 +55,7 @@ public class CSVReader {
             System.arraycopy(testDataFromF[i], 0, testDataS[i], 0, 7);
 
         }
-        return testDataS;
+
+        return testDataFromF;
     }
 }

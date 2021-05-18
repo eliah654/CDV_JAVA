@@ -58,9 +58,9 @@ public class SearchFormClicks {
     }
 
     public void setCookieAgree(int counterT) {
-
+        wait = new WebDriverWait(driver, 1);
         if(counterT == 0) {
-            wait = new WebDriverWait(driver, 1);
+        //if (cookieAgree.()){
             wait.until(elementToBeClickable(cookieAgree));
             cookieAgree.click();
         }
@@ -109,11 +109,15 @@ public class SearchFormClicks {
         godzinaInput.sendKeys(insertGodzina);
     }
 
-    public void directConnections(){
+    public void directConnections(int testCase){
 
         wait = new WebDriverWait(driver, 1);
         wait.until(elementToBeClickable(directConnections));
-        if(!dC2.isSelected()) {
+
+        if(!dC2.isSelected() && testCase == 0) {
+            directConnections.click();
+        }
+        else if(dC2.isSelected() && testCase == 1){
             directConnections.click();
         }
     }
