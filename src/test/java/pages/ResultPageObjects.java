@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,39 +14,41 @@ public class ResultPageObjects {
 
     WebDriver driver;
     WebDriverWait wait;
+    Actions action;
 
     @FindBy(xpath = "//h2[@class='inline-center']")
-    WebElement mainTitle;
+    private WebElement mainTitle;
 
     @FindBy(xpath = "//a[contains(text(),'Nowe wyszukiwanie')]")
-    WebElement newSearchLink;
+    private WebElement newSearchLink;
 
     @FindBy(xpath = "//a[@class ='btn btn--outline btn--color-fourth txlc loadScr'][contains(text(),'Zmień kryteria')]")
-    WebElement changeCriteria;
+    private WebElement changeCriteria;
 
     @FindBy(xpath = "/body[@ data-fixed='188']/div[@ id='accessible-body']/div[@ class ='main box']/div[@ class ='search-results box']/div[@ class ='search-results__container']/div[1]")
-    WebElement firstResult;
+    private WebElement firstResult;
 
-    @FindBy(xpath = "// body[@ data-fixed='188'] / div[@ id='accessible-body'] / div[ @class ='main box'] / div[@ class ='search-results box'] / div[@ class ='search-results__container'] / div[1] / div[1] / button[1]")
-    WebElement transition1;
+    @FindBy(xpath = "//body/div[@id='accessible-body']/div[1]/div[3]/div[2]/div[1]/div[1]/button[1]")
+    private WebElement transition1;
 
-    @FindBy(xpath = "// body[@ data-fixed='188'] / div[@ id='accessible-body'] / div[@ class ='main box'] / div[@ class ='search-results box'] / div[@ class ='search-results__container'] / div[2] / div[1] / button[1]")
-    WebElement transition2;
+    @FindBy(xpath = "//body/div[@id='accessible-body']/div[1]/div[3]/div[2]/div[2]/div[1]/button[1]")
+    private WebElement transition2;
 
-    @FindBy(xpath = "// body[@ data-fixed='188'] / div[@ id='accessible-body'] / div[@ class ='main box'] / div[@ class ='search-results box'] / div[@ class ='search-results__container'] / div[3] / div[1] / button[1]")
+    @FindBy(xpath = "//body/div[@id='accessible-body']/div[1]/div[3]/div[2]/div[3]/div[1]/button[1]")
     WebElement transition3;
 
-    @FindBy(xpath = "// body[@ data-fixed='188'] / div[@ id='accessible-body'] / div[@ class ='main box'] / div[@ class ='search-results box'] / div[@ class ='search-results__container'] / div[4] / div[1] / button[1]")
-    WebElement transition4;
+    @FindBy(xpath = "//body/div[@id='accessible-body']/div[1]/div[3]/div[2]/div[3]/div[1]/button[1]")
+    private WebElement transition4;
 
-    @FindBy(xpath = "// body[@ data-fixed='188'] / div[@ id='accessible-body'] / div[@ class ='main box'] / div[@ class ='search-results box'] / div[@ class ='search-results__container'] / div[5] / div[1] / button[1]")
-    WebElement transition5;
+    @FindBy(xpath = "//body/div[@id='accessible-body']/div[1]/div[3]/div[2]/div[5]/div[1]/button[1]")
+    private WebElement transition5;
 
-    @FindBy(xpath = "//h3[@class='inline-center abt-focusable']")
-    WebElement noConnection;
+    @FindBy(xpath= "/html[1]/body[1]/div[6]/div[1]/div[2]/h3[1]")
+    //@FindBy(css = "h3.inline-center.abt-focusable")
+    private WebElement noConnection;
 
     @FindBy(xpath = "// body[@ data-fixed='188'] / div[@ id='accessible-body'] / div[ @class ='main box'] / div[@ class ='search-results box'] / div[@ class ='search-results__container'] / div[1] / div[1] / button[1]")
-    WebElement changeLevel1;
+    private WebElement changeLevel1;
 
 
     public ResultPageObjects(WebDriver driver) {
@@ -54,9 +57,14 @@ public class ResultPageObjects {
 
     }
 
+    public String checkNoConnection(){
+        wait = new WebDriverWait(driver, 10);
+        return noConnection.getText();
+    }
+
     public String checkMainTitle() {
 
-        wait = new WebDriverWait(driver, 1);
+        wait = new WebDriverWait(driver, 10);
         wait.until(visibilityOf(mainTitle));
         return mainTitle.getText();
     }
@@ -88,7 +96,6 @@ public class ResultPageObjects {
 
     public String checkTrainNumber(String trainNumber) {
         WebElement trainNumberOnPage;
-        //String numberOnPage = null;
         wait = new WebDriverWait(driver, 1);
         trainNumberOnPage = driver.findElement(By.xpath("//p[contains(text(),'" + trainNumber + "')]"));
         wait.until(visibilityOf(trainNumberOnPage));
@@ -96,25 +103,31 @@ public class ResultPageObjects {
     }
 
 
-    public void openChanges(int level) {
-        wait = new WebDriverWait(driver, 1);
-        WebElement openTransition;
+    public void openTransitions(int level) {
+        wait = new WebDriverWait(driver, 5);
+        //WebElement openTransition;
+        action = new Actions(driver);
 
         switch (level) {
             case 1:
                 wait.until(elementToBeClickable(transition1));
+                action.moveToElement(transition1).perform();
                 transition1.click();
             case 2:
                 wait.until(elementToBeClickable(transition2));
+                action.moveToElement(transition2).perform();
                 transition1.click();
             case 3:
                 wait.until(elementToBeClickable(transition3));
+                action.moveToElement(transition2).perform();
                 transition1.click();
             case 4:
                 wait.until(elementToBeClickable(transition4));
+                action.moveToElement(transition4).perform();
                 transition1.click();
             case 5:
                 wait.until(elementToBeClickable(transition5));
+                action.moveToElement(transition5).perform();
                 transition1.click();
 
         }

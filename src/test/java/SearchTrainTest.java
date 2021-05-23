@@ -1,13 +1,10 @@
-import org.apache.commons.csv.CSVRecord;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.ResultPageObjects;
 import pages.SearchFormClicks;
-import tools.CSVReader;
-import java.io.IOException;
+import tools.CSVReaderFF;
 
 public class SearchTrainTest {
     public WebDriver driver;
@@ -51,18 +48,20 @@ public class SearchTrainTest {
         clickSzukaj.searchButton();
     }
 
+
+
     @BeforeClass
     public void setUp(){
-        System.setProperty("webdriver.firefox.driver", "/geckodriver/geckodriver");
-        //System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver");
-        driver = new FirefoxDriver();
-        //driver = new ChromeDriver();
+        //System.setProperty("webdriver.firefox.driver", "/geckodriver/geckodriver");
+        System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver");
+        //driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
 
     }
 
 
-    @Test(dataProvider="testData1", dataProviderClass=CSVReader.class)
+    @Test(dataProvider="testData1", dataProviderClass= CSVReaderFF.class)
     public void testSearchTrain1(String godzinka, String dzien, String odjazd, String przyjazd, String trainName, String trainNumber, String nameType) {
 
         if(godzinka != null){
@@ -87,7 +86,7 @@ public class SearchTrainTest {
 
     }
 
-    @Test(dataProvider="testData2", dataProviderClass=CSVReader.class)
+    @Test(dataProvider="testData2", dataProviderClass= CSVReaderFF.class)
     public void testSearchTrain2(String godzinka, String dzien, String odjazd, String przyjazd, String trainName, String trainNumber, String nameType, String changes,
                                  String cheng1A, String cheng1B, String cheng1C, String cheng2A, String cheng2B, String cheng2C,
                                  String cheng3A, String cheng3B, String cheng3C, String cheng4A, String cheng4B, String cheng4C){
@@ -98,10 +97,15 @@ public class SearchTrainTest {
             driver.get("https://portalpasazera.pl");
 
             this.setAndExcuteSerach(godzinka, dzien, odjazd, przyjazd, 1, counterT);
+            counterT++;
+
+            String titleReturn = checkResults.checkMainTitle();
+            Assert.assertEquals(titleReturn, "Wyniki wyszukiwania");
 
             switch (changes) {
                 case "1":
-                    checkResults.openChanges(1);
+                    checkResults.openTransitions(1);
+                   /*
                     checkedResults = checkResults.checkTransition(trainName, trainNumber, nameType,
                             cheng1A, cheng1B, cheng1C, cheng2A, cheng2B, cheng2C, cheng3A, cheng3B, cheng3C, cheng4A, cheng4B,
                             cheng4C);
@@ -119,11 +123,11 @@ public class SearchTrainTest {
                     Assert.assertEquals(checkedResults[3][1], cheng3B);
 
                     Assert.assertEquals(checkedResults[4][0], cheng4A);
-                    Assert.assertEquals(checkedResults[5][1], cheng4B);
-
+                    Assert.assertEquals(checkedResults[4][1], cheng4B);
+                   */
                 case "2":
-                    checkResults.openChanges(2);
-                    checkResults.openChanges(1);
+                    checkResults.openTransitions(2);
+                    /*
                     checkedResults = checkResults.checkTransition(trainName, trainNumber, nameType,
                             cheng1A, cheng1B, cheng1C, cheng2A, cheng2B, cheng2C, cheng3A, cheng3B, cheng3C, cheng4A, cheng4B,
                             cheng4C);
@@ -141,11 +145,11 @@ public class SearchTrainTest {
                     Assert.assertEquals(checkedResults[3][1], cheng3B);
 
                     Assert.assertEquals(checkedResults[4][0], cheng4A);
-                    Assert.assertEquals(checkedResults[5][1], cheng4B);
-
+                    Assert.assertEquals(checkedResults[4][1], cheng4B);
+                    */
                 case "3":
-                    checkResults.openChanges(3);
-                    checkResults.openChanges(1);
+                    checkResults.openTransitions(3);
+                    /*
                     checkedResults = checkResults.checkTransition(trainName, trainNumber, nameType,
                             cheng1A, cheng1B, cheng1C, cheng2A, cheng2B, cheng2C, cheng3A, cheng3B, cheng3C, cheng4A, cheng4B,
                             cheng4C);
@@ -163,11 +167,11 @@ public class SearchTrainTest {
                     Assert.assertEquals(checkedResults[3][1], cheng3B);
 
                     Assert.assertEquals(checkedResults[4][0], cheng4A);
-                    Assert.assertEquals(checkedResults[5][1], cheng4B);
-
+                    Assert.assertEquals(checkedResults[4][1], cheng4B);
+                */
                 case "4":
-                    checkResults.openChanges(4);
-                    checkResults.openChanges(1);
+                    checkResults.openTransitions(4);
+                    /*
                     checkedResults = checkResults.checkTransition(trainName, trainNumber, nameType,
                             cheng1A, cheng1B, cheng1C, cheng2A, cheng2B, cheng2C, cheng3A, cheng3B, cheng3C, cheng4A, cheng4B,
                             cheng4C);
@@ -185,11 +189,11 @@ public class SearchTrainTest {
                     Assert.assertEquals(checkedResults[3][1], cheng3B);
 
                     Assert.assertEquals(checkedResults[4][0], cheng4A);
-                    Assert.assertEquals(checkedResults[5][1], cheng4B);
-
+                    Assert.assertEquals(checkedResults[4][1], cheng4B);
+                */
                 case "5":
-                    checkResults.openChanges(5);
-                    checkResults.openChanges(1);
+                    checkResults.openTransitions(5);
+                    /*
                     checkedResults = checkResults.checkTransition(trainName, trainNumber, nameType,
                             cheng1A, cheng1B, cheng1C, cheng2A, cheng2B, cheng2C, cheng3A, cheng3B, cheng3C, cheng4A, cheng4B,
                             cheng4C);
@@ -207,11 +211,22 @@ public class SearchTrainTest {
                     Assert.assertEquals(checkedResults[3][1], cheng3B);
 
                     Assert.assertEquals(checkedResults[4][0], cheng4A);
-                    Assert.assertEquals(checkedResults[5][1], cheng4B);
-
+                    Assert.assertEquals(checkedResults[4][1], cheng4B);
+                */
             }
         }
 
+    }
+
+    @Test(dataProvider="testData3", dataProviderClass= CSVReaderFF.class)
+    public void testSearchTrain3(String godzinka, String dzien, String odjazd, String przyjazd){
+        if(godzinka != null) {
+            driver.get("https://portalpasazera.pl");
+            ResultPageObjects checkResults = new ResultPageObjects(driver);
+            this.setAndExcuteSerach(godzinka, dzien, odjazd, przyjazd, 0, counterT);
+            counterT++;
+            Assert.assertEquals(checkResults.checkNoConnection(), "Nie znaleziono połączeń według wskazanych kryteriów wyszukiwania");
+        }
     }
 
     @AfterClass

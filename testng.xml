@@ -3,7 +3,11 @@
     <test name="CDV_JAVA_TEST1" preserve-order="true" enabled="true">
         <classes>
             <class name="SearchTrainTest">
-
+                <methods>
+                    <exclude name="testSearchTrain1"/>
+                    <exclude name="testSearchTrain2"/>
+                    <include name="testSearchTrain3"/>
+                </methods>
             </class>
         </classes>
     </test>

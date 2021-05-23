@@ -15,34 +15,34 @@ public class SearchFormClicks {
     WebDriverWait wait ;
 
     @FindBy(xpath = "//button[contains(text(),'Akceptuj wszystkie pliki cookie')]")
-    WebElement cookieAgree;
+    private WebElement cookieAgree;
 
     @FindBy(xpath = "//button[@class='btn btn--lg btn-start-search txuc']")
-    WebElement searchButton;
+    private WebElement searchButton;
 
     @FindBy(xpath = "//input[@id='departureFrom']")
-    WebElement wyjazdInput;
+    private WebElement wyjazdInput;
 
     @FindBy(xpath = "//input[@id='arrivalTo']")
-    WebElement przyjazdInput;
+    private WebElement przyjazdInput;
 
     @FindBy(xpath = "//input[@id='main-search__dateStart']")
-    WebElement dataInput;
+    private WebElement dataInput;
 
     @FindBy(xpath = "//input[@id='main-search__timeStart']")
-    WebElement godzinaInput;
+    private WebElement godzinaInput;
 
     @FindBy(xpath = "//span[@class='label-inside txlc']")
-    WebElement directConnections;
+    private WebElement directConnections;
 
     @FindBy(xpath = "//input[@id='dirChck']")
-    WebElement dC2;
+    private WebElement dC2;
 
     @FindBy(xpath = "//button[contains(text(),'Więcej opcji wyszukiwania')]")
-    WebElement moreSearchOptions;
+    private WebElement moreSearchOptions;
 
     @FindBy(xpath = "//div[@class='main-search__options-close']//button[@type='button']//span[@class='txlc'][contains(text(),'Zamknij opcje wyszukiwania')]")
-    WebElement closeSearchOptions;
+    private WebElement closeSearchOptions;
 
 
 
